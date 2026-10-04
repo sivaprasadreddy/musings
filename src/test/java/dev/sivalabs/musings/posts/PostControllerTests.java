@@ -29,6 +29,15 @@ class PostControllerTests extends BaseIT {
     }
 
     @Test
+    void shouldRenderHomeWithoutPostFormWhenAnonymous() throws UnsupportedEncodingException {
+        var result = mvc.get().uri("/").exchange();
+        assertThat(result).hasStatusOk().hasViewName("index");
+        assertThat(result.getResponse().getContentAsString())
+                .contains("Latest messages", "Post 24", "Message 24", "Load more", "Login")
+                .doesNotContain("Post a message", "action=\"/posts\"", "name=\"title\"", "name=\"content\"");
+    }
+
+    @Test
     void shouldRenderHomeWithSeededPostsAndPostForm() throws UnsupportedEncodingException {
         var result = mvc.get().uri("/").with(user(principal)).exchange();
         assertThat(result).hasStatusOk().hasViewName("index");
@@ -65,7 +74,7 @@ class PostControllerTests extends BaseIT {
                     assertThat(post.authorName()).isEqualTo("Siva");
                     assertThat(post.createdAt()).isNotNull();
                 });
-        var home = mvc.get().uri("/").with(user(principal)).exchange();
+        var home = mvc.get().uri("/").exchange();
         assertThat(home).hasStatusOk();
         assertThat(home.getResponse().getContentAsString())
                 .contains("&lt;script&gt;")
@@ -134,8 +143,7 @@ class PostControllerTests extends BaseIT {
                 .containsExactly(24L, 25L, 23L, 22L, 21L, 20L, 19L, 18L, 17L, 16L);
         assertThat(home.getResponse().getContentAsString()).contains("hx-get=\"/posts?page=2\"");
 
-        var more =
-                mvc.get().uri("/posts").param("page", "2").with(user(principal)).exchange();
+        var more = mvc.get().uri("/posts").param("page", "2").exchange();
         assertThat(more).hasStatusOk().hasViewName("posts/feed :: feed");
         assertThat(more.getResponse().getContentAsString())
                 .contains("hx-get=\"/posts?page=3\"", "Post 15", "Post 6")
@@ -144,8 +152,7 @@ class PostControllerTests extends BaseIT {
                 .extracting(PostVM::id)
                 .containsExactly(15L, 14L, 13L, 12L, 11L, 10L, 9L, 8L, 7L, 6L);
 
-        var last =
-                mvc.get().uri("/posts").param("page", "3").with(user(principal)).exchange();
+        var last = mvc.get().uri("/posts").param("page", "3").exchange();
         assertThat(last).hasStatusOk();
         assertThat(postService.findLatest(3).data()).extracting(PostVM::id).containsExactly(5L, 4L, 3L, 2L, 1L);
         assertThat(last.getResponse().getContentAsString())

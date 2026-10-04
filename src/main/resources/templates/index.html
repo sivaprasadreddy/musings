@@ -2,12 +2,13 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <body>
 <div layout:fragment="content">
     <div class="mx-auto max-w-5xl space-y-8">
-        <section class="rounded-lg bg-white p-6 shadow-sm border border-gray-200" aria-labelledby="new-post-heading">
+        <section sec:authorize="isAuthenticated()" class="rounded-lg bg-white p-6 shadow-sm border border-gray-200" aria-labelledby="new-post-heading">
             <h1 id="new-post-heading" class="text-xl font-semibold text-gray-900">Post a message</h1>
             <form method="post" th:action="@{/posts}" th:object="${postForm}" class="mt-4 space-y-4">
                 <div>
