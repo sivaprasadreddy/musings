@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="feed">
+    <article th:each="post : ${posts.data}" class="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+        <h3 class="text-xl font-semibold text-gray-900 break-words" th:text="${post.title}">Post title</h3>
+        <div class="mt-2 text-sm text-gray-500">
+            <span th:text="${post.authorName}">Author</span>
+            <span aria-hidden="true"> &middot; </span>
+            <time th:datetime="${post.createdAt}" th:text="${#temporals.format(post.createdAt, 'd MMM yyyy, h:mm a z', 'UTC')}">Posted at</time>
+        </div>
+        <p class="mt-4 text-gray-700 whitespace-pre-wrap break-words" th:text="${post.content}">Post content</p>
+    </article>
+    <div th:if="${posts.hasNextPage}" class="text-center">
+        <button type="button" th:attr="hx-get=@{/posts(page=${posts.currentPageNo + 1})}"
+                hx-target="closest div" hx-swap="outerHTML"
+                class="rounded-md bg-gray-800 px-5 py-2 text-sm font-medium text-white hover:bg-gray-700">
+            Load more
+        </button>
+    </div>
+</th:block>
+</body>
+</html>

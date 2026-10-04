@@ -10,5 +10,4 @@ class UserController {
     String loginForm() {
         return "login";
     }
-
 }
