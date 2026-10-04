@@ -1,0 +1,11 @@
+.post-composer > summary {
+    list-style: none;
+}
+
+.post-composer > summary::-webkit-details-marker {
+    display: none;
+}
+
+.post-composer[open] .post-composer-icon {
+    transform: rotate(180deg);
+}
