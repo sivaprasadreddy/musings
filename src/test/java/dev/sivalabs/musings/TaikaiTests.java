@@ -2,6 +2,7 @@ package dev.sivalabs.musings;
 
 import static com.tngtech.archunit.core.domain.JavaModifier.*;
 
+import com.enofex.taikai.ClassCriteria;
 import com.enofex.taikai.Taikai;
 import com.enofex.taikai.java.ImportsConfigurer;
 import java.util.List;
@@ -24,19 +25,18 @@ class TaikaiTests {
                                 .interfacesShouldNotHavePrefixI()))
                 .logging(logging ->
                         logging.loggersShouldFollowConventions(Logger.class, "LOG", List.of(PRIVATE, STATIC, FINAL)))
-                .test(test -> test.junit(junit -> junit.classesShouldBePackagePrivate(".*Test(s)")
-                        .classesShouldNotBeAnnotatedWithDisabled()
-                        .methodsShouldNotBeAnnotatedWithDisabled()))
+                .test(test ->
+                        test.junit(junit -> junit.classesShouldBePackagePrivate(ClassCriteria.nameMatching(".*Test(s)"))
+                                .classesShouldNotBeAnnotatedWithDisabled()
+                                .methodsShouldNotBeAnnotatedWithDisabled()))
                 .spring(spring -> spring.noAutowiredFields()
                         .boot(boot -> boot.applicationClassShouldResideInPackage(BASE_PACKAGE))
                         .configurations(c -> c.namesShouldMatch(".+Config"))
                         .controllers(controllers -> controllers
-                                // .shouldBeAnnotatedWithRestController()
                                 .namesShouldEndWithController()
                                 .shouldNotDependOnOtherControllers()
                                 .shouldBePackagePrivate())
-                        .services(services -> services
-                                // .shouldBeAnnotatedWithService()
+                        .services(services -> services.shouldBeAnnotatedWithService()
                                 .shouldNotDependOnControllers()
                                 .namesShouldEndWithService())
                         .repositories(repositories ->
