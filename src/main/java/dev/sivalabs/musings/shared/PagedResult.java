@@ -1,7 +1,6 @@
 package dev.sivalabs.musings.shared;
 
 import java.util.List;
-import java.util.function.Function;
 import org.springframework.data.domain.Page;
 
 public record PagedResult<T>(
@@ -19,15 +18,5 @@ public record PagedResult<T>(
                 page.getTotalElements(),
                 page.hasNext(),
                 page.hasPrevious());
-    }
-
-    public <R> PagedResult<R> map(Function<T, R> converter) {
-        return new PagedResult<>(
-                this.data.stream().map(converter).toList(),
-                this.currentPageNo,
-                this.totalPages,
-                this.totalElements,
-                this.hasNextPage,
-                this.hasPreviousPage);
     }
 }

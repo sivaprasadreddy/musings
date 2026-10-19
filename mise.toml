@@ -27,7 +27,7 @@ run = "./mvnw spotless:apply"
 [tasks.test]
 description = "Run all the tests"
 depends = ["format"]
-run = "./mvnw clean test -Dsurefire.skipAfterFailureCount=1"
+run = "./mvnw clean verify -Dsurefire.skipAfterFailureCount=1"
 
 [tasks.verify]
 description = "Run verification checks"

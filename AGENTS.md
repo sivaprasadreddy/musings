@@ -20,7 +20,7 @@ This file provides guidance to AI Agents when working with code in this reposito
   - `test(ui): add component tests for login form`
 
 ### Pull Requests
-- **Branch naming**: `feature/description`, `fix/issue-number-description`
+- **Branch naming**: `feat/description`, `fix/issue-number-description`
 - **Title**: Clear, concise description of changes
 - **Description**: Include what was changed and why
 - **Testing**: Ensure all tests pass, coverage meets requirements
