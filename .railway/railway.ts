@@ -16,5 +16,5 @@ export default defineRailway(() => {
         },
     });
 
-    return project("alluring-benevolence", { resources: [app, db] });
+    return project("musings-railway", { resources: [app, db] });
 });
