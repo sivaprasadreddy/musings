@@ -39,8 +39,11 @@ class TaikaiTests {
                         .services(services -> services.shouldBeAnnotatedWithService()
                                 .shouldNotDependOnControllers()
                                 .namesShouldEndWithService())
-                        .repositories(repositories ->
-                                repositories.shouldNotDependOnServices().namesShouldEndWithRepository()))
+                        .repositories(repositories -> repositories
+                                .shouldBePackagePrivate()
+                                .shouldNotDependOnServices()
+                                .namesShouldEndWithRepository())
+                        .transactional(txn -> txn.methodsShouldBePublic().shouldNotBeUsedInControllers()))
                 .build()
                 .checkAll();
     }
