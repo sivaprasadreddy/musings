@@ -4,6 +4,7 @@ export default defineRailway(() => {
     const db = postgres("Postgres");
     const app = service("musings", {
         source: github("sivaprasadreddy/musings", {branch: "main", checkSuites: false}),
+        //source: image("sivaprasadreddy/musings:latest"),
         build: {buildEnvironment: "V3", builder: "DOCKERFILE", dockerfilePath: "/Dockerfile"},
         env: {
             DB_HOST: db.env.PGHOST,
@@ -14,7 +15,12 @@ export default defineRailway(() => {
             BOOTUI_ENABLED: 'off',
             BOOTUI_MCP_ENABLED: 'off',
         },
+        healthcheck: '/actuator/health',
+        healthcheckTimeout: 30,
+        replicas: {
+            "asia-southeast1-eqsg3a": 1,
+        },
     });
 
-    return project("musings-railway", { resources: [app, db] });
+    return project("musings-prod", { resources: [app, db] });
 });
