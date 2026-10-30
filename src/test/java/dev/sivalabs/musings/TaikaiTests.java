@@ -9,9 +9,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
+@Order(1)
 class TaikaiTests {
     private static final String BASE_PACKAGE = TaikaiTests.class.getPackageName();
 
