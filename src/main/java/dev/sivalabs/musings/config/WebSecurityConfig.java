@@ -1,11 +1,14 @@
 package dev.sivalabs.musings.config;
 
+import io.github.wimdeblauwe.htmx.spring.boot.security.HxRedirectToPageAccessDeniedHandler;
+import io.github.wimdeblauwe.htmx.spring.boot.security.HxRedirectToPageAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 @Configuration
@@ -33,6 +36,11 @@ class WebSecurityConfig {
                 .authenticated());
 
         http.formLogin(formLogin -> formLogin.loginPage("/login").permitAll());
+
+        http.exceptionHandling(exceptions -> exceptions
+                .authenticationEntryPoint(
+                        new HxRedirectToPageAuthenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
+                .accessDeniedHandler(new HxRedirectToPageAccessDeniedHandler()));
 
         http.logout(logout -> logout.logoutRequestMatcher(PathPatternRequestMatcher.pathPattern("/logout"))
                 .logoutSuccessUrl("/")

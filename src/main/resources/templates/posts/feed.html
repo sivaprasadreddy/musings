@@ -10,6 +10,7 @@
             <time th:datetime="${post.createdAt}" th:text="${#temporals.format(post.createdAt, 'd MMM yyyy, h:mm a z', 'UTC')}">Posted at</time>
         </div>
         <p class="mt-4 text-gray-700 whitespace-pre-wrap break-words" th:text="${post.content}">Post content</p>
+        <div th:replace="~{posts/likes :: likes(likes=${postLikes.get(post.id)})}"></div>
     </article>
     <div th:if="${posts.hasNextPage}" class="text-center">
         <button type="button" th:attr="hx-get=@{/posts(page=${posts.currentPageNo + 1})}"

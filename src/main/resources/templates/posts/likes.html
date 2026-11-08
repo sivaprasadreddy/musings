@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="likes" th:id="|post-likes-${likes.postId}|" class="post-likes mt-4 flex items-center gap-2" aria-live="polite">
+    <form sec:authorize="isAuthenticated()" method="post"
+          th:action="@{/posts/{id}/{action}(id=${likes.postId},action=${likes.liked ? 'unlike' : 'like'})}"
+          th:attr="hx-post=@{/posts/{id}/{action}(id=${likes.postId},action=${likes.liked ? 'unlike' : 'like'})}"
+          hx-target="closest .post-likes" hx-swap="outerHTML" hx-disable="find button"
+          hx-status:4xx="swap:none" hx-status:5xx="swap:none">
+        <button type="submit"
+                th:attr="aria-pressed=${likes.liked},aria-label=${likes.liked ? 'Unlike' : 'Like'}"
+                th:title="${likes.liked ? 'Unlike' : 'Like'}"
+                class="rounded-md border border-gray-300 px-3 py-1 text-xl hover:bg-gray-100 disabled:opacity-50"
+                th:classappend="${likes.liked ? 'text-red-600' : 'text-gray-600'}">
+            <span aria-hidden="true" th:text="${likes.liked ? '♥' : '♡'}">♡</span>
+        </button>
+    </form>
+    <span th:if="${likes.count > 0}" class="like-count" th:text="${likes.count}">1</span>
+    <span class="like-error text-sm text-red-700" role="alert"></span>
+</div>
+</body>
+</html>
