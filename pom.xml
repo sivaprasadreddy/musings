@@ -22,7 +22,7 @@
         <bootui.version>2.3.0</bootui.version>
         <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>60%</jacoco.minimum.coverage>
-        <palantir-java-format.version>2.102.0</palantir-java-format.version>
+        <palantir-java-format.version>2.103.0</palantir-java-format.version>
         <spotless.version>3.11.0</spotless.version>
         <archunit.version>1.5.1</archunit.version>
         <taikai.version>2.8.0</taikai.version>
@@ -304,6 +304,7 @@
                 <version>${spotless.version}</version>
                 <configuration>
                     <java>
+                        <shortenFullyQualifiedTypes/>
                         <importOrder/>
                         <removeUnusedImports/>
                         <formatAnnotations/>
