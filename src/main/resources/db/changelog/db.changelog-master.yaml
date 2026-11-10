@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/001-create_users_table.sql
+  - include:
+      file: db/changelog/migrations/002-create_posts_table.sql
+  - include:
+      file: db/changelog/migrations/003-insert_sample_posts.sql
+  - include:
+      file: db/changelog/migrations/004-create_post_likes_table.sql

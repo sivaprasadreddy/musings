@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset siva:004-create_post_likes_table
 create table post_likes
 (
     post_id bigint not null references posts(id) on delete cascade,

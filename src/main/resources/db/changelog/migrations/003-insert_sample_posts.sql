@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset siva:003-insert_sample_posts
 insert into posts(title, content, author_id, created_at) values
 ('Welcome to Musings',
  'A place to share ideas, lessons learned, and small discoveries. Every thoughtful conversation starts with a single post.',

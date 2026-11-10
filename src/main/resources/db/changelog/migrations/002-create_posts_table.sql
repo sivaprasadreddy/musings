@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset siva:002-create_posts_table
 create sequence post_id_seq start with 100 increment by 50;
 
 create table posts

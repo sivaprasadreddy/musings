@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset siva:001-create_users_table
 create sequence user_id_seq start with 100 increment by 50;
 
 create table users
