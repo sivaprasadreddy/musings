@@ -1,17 +1,20 @@
+@import dev.sivalabs.musings.config.ViewHelpers
+@import gg.jte.Content
+@param String title = null
+@param String successMessage = null
+@param String errorMessage = null
+@param Content content
+@param Content pageScripts = null
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:hx="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE" th:text="#{app.name}">Musings</title>
+    <title>Musings@if(title != null) - ${title}@endif</title>
     <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="/webjars/font-awesome/css/all.css">
-        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" href="/css/styles.css"/>
         <script>
             function toggleMobileMenu() {
                 const menu = document.getElementById('mobile-menu');
@@ -36,29 +39,33 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-                <a th:href="@{/}" class="text-white text-xl font-bold" th:text="#{app.name}">Musings</a>
+                <a href="/" class="text-white text-xl font-bold">Musings</a>
             </div>
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6 space-x-4">
-                    <div sec:authorize="isAnonymous()">
-                        <a th:href="@{/login}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </a>
-                    </div>
-                    <div sec:authorize="isAuthenticated()" class="relative">
+                    @if(ViewHelpers.isAuthenticated())
+                    <div class="relative">
                         <button type="button" onclick="toggleUserDropdown()" id="user-menu-button" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center">
                             <i class="fas fa-user mr-2"></i>
-                            <span sec:authentication="principal.name">User name</span>
+                            <span>${ViewHelpers.currentUserName()}</span>
                             <i class="fas fa-chevron-down ml-2"></i>
                         </button>
                         <div id="user-dropdown" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
-                            <form method="post" th:action="@{/logout}">
+                            <form method="post" action="/logout">
+                                @template.csrf()
                                 <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                                 </button>
                             </form>
                         </div>
                     </div>
+                    @else
+                    <div>
+                        <a href="/login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="md:hidden">
@@ -70,31 +77,36 @@
     </div>
     <div class="md:hidden hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <div sec:authorize="isAnonymous()">
-                <a th:href="@{/login}" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </a>
-            </div>
-            <div sec:authorize="isAuthenticated()">
-                <form method="post" th:action="@{/logout}">
+            @if(ViewHelpers.isAuthenticated())
+            <div>
+                <form method="post" action="/logout">
+                    @template.csrf()
                     <button type="submit" class="text-gray-300 hover:bg-gray-700 hover:text-white w-full text-left px-3 py-2 rounded-md text-base font-medium">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </form>
             </div>
+            @else
+            <div>
+                <a href="/login" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            </div>
+            @endif
         </div>
     </div>
 </nav>
 
 <div class="pt-20 pb-8">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div th:if="${successMessage}" class="mb-4 rounded-lg bg-green-50 p-4 border border-green-200">
+        @if(successMessage != null)
+        <div class="mb-4 rounded-lg bg-green-50 p-4 border border-green-200">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <i class="fas fa-check-circle text-green-400"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-green-800" th:text="${successMessage}"></p>
+                    <p class="text-sm font-medium text-green-800">${successMessage}</p>
                 </div>
                 <div class="ml-auto pl-3">
                     <button type="button" onclick="this.parentElement.parentElement.parentElement.remove()" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100">
@@ -103,14 +115,16 @@
                 </div>
             </div>
         </div>
+        @endif
 
-        <div th:if="${errorMessage}" class="mb-4 rounded-lg bg-red-50 p-4 border border-red-200">
+        @if(errorMessage != null)
+        <div class="mb-4 rounded-lg bg-red-50 p-4 border border-red-200">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <i class="fas fa-exclamation-circle text-red-400"></i>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-red-800" th:text="${errorMessage}"></p>
+                    <p class="text-sm font-medium text-red-800">${errorMessage}</p>
                 </div>
                 <div class="ml-auto pl-3">
                     <button type="button" onclick="this.parentElement.parentElement.parentElement.remove()" class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100">
@@ -119,15 +133,15 @@
                 </div>
             </div>
         </div>
+        @endif
 
-        <div layout:fragment="content">
-            <!-- Your Page Content Here -->
+        <div>
+            ${content}
         </div>
     </div>
 </div>
-<script th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
-<script th:src="@{/js/post-likes.js}"></script>
-<div layout:fragment="pageScripts">
-</div>
+<script src="/webjars/htmx.org/dist/htmx.min.js"></script>
+<script src="/js/post-likes.js"></script>
+@if(pageScripts != null)${pageScripts}@endif
 </body>
 </html>

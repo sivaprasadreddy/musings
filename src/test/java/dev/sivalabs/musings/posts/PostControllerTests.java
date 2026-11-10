@@ -144,7 +144,7 @@ class PostControllerTests extends BaseIT {
         assertThat(home.getResponse().getContentAsString()).contains("hx-get=\"/posts?page=2\"");
 
         var more = mvc.get().uri("/posts").param("page", "2").exchange();
-        assertThat(more).hasStatusOk().hasViewName("posts/feed :: feed");
+        assertThat(more).hasStatusOk().hasViewName("posts/feed");
         assertThat(more.getResponse().getContentAsString())
                 .contains("hx-get=\"/posts?page=3\"", "Post 15", "Post 6")
                 .doesNotContain("<html", "Post a message", "Post 16", "Post 5</h3>");

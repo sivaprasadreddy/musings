@@ -39,7 +39,7 @@ class PostLikeTests extends BaseIT {
                     .header("HX-Request", "true")
                     .param("userId", "2")
                     .exchange();
-            assertThat(result).hasStatusOk().hasViewName("posts/likes :: likes");
+            assertThat(result).hasStatusOk().hasViewName("posts/likes");
             assertThat(result.getResponse().getContentAsString())
                     .contains(
                             "id=\"post-likes-24\"",

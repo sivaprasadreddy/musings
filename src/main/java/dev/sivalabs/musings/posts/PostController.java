@@ -33,7 +33,7 @@ class PostController {
     @GetMapping("/posts")
     String loadPosts(@RequestParam(defaultValue = "1") int page, Model model) {
         addFeed(model, Math.max(1, page));
-        return "posts/feed :: feed";
+        return "posts/feed";
     }
 
     @PostMapping("/posts")
@@ -44,6 +44,7 @@ class PostController {
             RedirectAttributes redirectAttributes) {
         Long authorId = AuthUtils.getCurrentUserIdOrThrow();
         if (bindingResult.hasErrors()) {
+            model.addAttribute("postFormErrors", bindingResult);
             addFeed(model, 1);
             return "index";
         }
@@ -55,13 +56,13 @@ class PostController {
     @PostMapping("/posts/{postId}/like")
     String like(@PathVariable Long postId, Model model) {
         model.addAttribute("likes", postLikeService.setLiked(postId, AuthUtils.getCurrentUserIdOrThrow(), true));
-        return "posts/likes :: likes";
+        return "posts/likes";
     }
 
     @PostMapping("/posts/{postId}/unlike")
     String unlike(@PathVariable Long postId, Model model) {
         model.addAttribute("likes", postLikeService.setLiked(postId, AuthUtils.getCurrentUserIdOrThrow(), false));
-        return "posts/likes :: likes";
+        return "posts/likes";
     }
 
     private void addFeed(Model model, int page) {

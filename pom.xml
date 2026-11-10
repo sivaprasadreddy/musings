@@ -18,7 +18,8 @@
         <spring-modulith.version>2.1.2</spring-modulith.version>
         <font_awesome.version>7.3.0</font_awesome.version>
         <htmx.org.version>4.0.1</htmx.org.version>
-        <htmx-spring-boot-thymeleaf.version>6.0.1</htmx-spring-boot-thymeleaf.version>
+        <htmx-spring-boot.version>6.0.1</htmx-spring-boot.version>
+        <jte.version>3.2.4</jte.version>
         <bootui.version>2.3.0</bootui.version>
         <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>60%</jacoco.minimum.coverage>
@@ -57,21 +58,19 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>gg.jte</groupId>
+            <artifactId>jte</artifactId>
+            <version>${jte.version}</version>
         </dependency>
         <dependency>
-            <groupId>nz.net.ultraq.thymeleaf</groupId>
-            <artifactId>thymeleaf-layout-dialect</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+            <groupId>gg.jte</groupId>
+            <artifactId>jte-spring-boot-starter-4</artifactId>
+            <version>${jte.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.wimdeblauwe</groupId>
-            <artifactId>htmx-spring-boot-thymeleaf</artifactId>
-            <version>${htmx-spring-boot-thymeleaf.version}</version>
+            <artifactId>htmx-spring-boot</artifactId>
+            <version>${htmx-spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -149,11 +148,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -251,6 +245,23 @@
                         <goals>
                             <goal>revision</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>gg.jte</groupId>
+                <artifactId>jte-maven-plugin</artifactId>
+                <version>${jte.version}</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/jte</sourceDirectory>
+                    <contentType>Html</contentType>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
             </plugin>

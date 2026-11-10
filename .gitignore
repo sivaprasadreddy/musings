@@ -36,3 +36,6 @@ out/
 ### Misc ###
 .env
 .env.properties
+
+### JTE ###
+jte-classes/

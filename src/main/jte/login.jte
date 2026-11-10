@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<head>
-    <title>Login</title>
-</head>
-<body>
-
-<div layout:fragment="content">
+@import dev.sivalabs.musings.config.ViewHelpers
+@param String message = null
+@template.layout(title = "Login", content = @`
     <div class="flex min-h-[calc(100dvh-8rem)] items-center justify-center py-6">
         <div class="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/60">
             <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-sky-900 px-8 py-8 text-center text-white">
@@ -20,21 +11,22 @@
                 <p class="mt-1 text-sm text-slate-300">Sign in to your account.</p>
             </div>
             <div class="p-6 sm:p-8">
-                <div th:if="${param.error}">
+                @if(ViewHelpers.hasRequestParam("error"))
                     <div class="mb-5 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700" role="alert">
                         <i class="fa-solid fa-circle-exclamation mr-2" aria-hidden="true"></i>Invalid email or password.
                     </div>
-                </div>
-                <div th:if="${message}">
+                @endif
+                @if(message != null)
                     <div class="mb-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
-                         role="status" th:text="${message}">Success Message</div>
-                </div>
-                <div th:if="${param.logout}">
+                         role="status">${message}</div>
+                @endif
+                @if(ViewHelpers.hasRequestParam("logout"))
                     <div class="mb-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700" role="status">
                         <i class="fa-solid fa-circle-check mr-2" aria-hidden="true"></i>You have been logged out.
                     </div>
-                </div>
-                <form id="loginForm" method="post" th:action="@{/login}" class="space-y-5">
+                @endif
+                <form id="loginForm" method="post" action="/login" class="space-y-5">
+                    @template.csrf()
                     <div>
                         <label for="username" class="mb-2 block text-sm font-semibold text-slate-700">Email <span class="text-rose-600">*</span></label>
                         <input type="email" id="username" name="username" required autocomplete="email"
@@ -55,7 +47,4 @@
             </div>
         </div>
     </div>
-</div>
-
-</body>
-</html>
+`)

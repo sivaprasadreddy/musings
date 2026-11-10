@@ -5,7 +5,7 @@
 |---|---|
 | Language  | Java 25 |
 | Framework | Spring Boot (Spring MVC), Spring Modulith |
-| Views | Thymeleaf, HTMX |
+| Views | JTE, HTMX |
 | UI | Tailwind CSS, Font Awesome  |
 | Security | Spring Security |
 | Persistence | PostgreSQL, Spring Data JPA (Hibernate), Liquibase migrations (SQL changesets) |
