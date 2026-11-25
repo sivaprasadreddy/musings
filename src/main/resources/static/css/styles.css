@@ -1,11 +1,68 @@
-.post-composer > summary {
+/* Logo square in the sidebar header. */
+.app-logo {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: calc(var(--radius) - 2px);
+    background: var(--sidebar-primary);
+    color: var(--sidebar-primary-foreground);
+}
+.app-logo > svg { inline-size: 1rem; block-size: 1rem; }
+
+/* Top bar: as high as the sidebar header, sticky, with a border below. */
+.sidebar-inset > .site-header {
+    --site-header-height: 4rem;
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+    gap: 1rem;
+    border-block-end: 1px solid var(--border);
+    background: var(--background);
+}
+.sidebar-inset > .site-header > .site-header-end > .separator { block-size: 1.5rem; }
+@media (width >= 48rem) {
+    .sidebar-inset > .site-header > .separator { display: none; }
+}
+
+/* Page padding. */
+.page { padding: 2rem 1rem; }
+@media (width >= 64rem) {
+    .page { padding: 2.5rem 2rem; }
+}
+.flash { margin-block-end: 1rem; }
+
+/* Simple vertical stack. */
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+.feed-page { max-inline-size: 56rem; margin-inline: auto; gap: 2rem; }
+.section-title { font-size: 1.25rem; font-weight: 600; margin: 0; }
+
+/* Post composer (collapsible). */
+.post-composer > .collapsible-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
     list-style: none;
 }
+.post-composer > .collapsible-trigger::-webkit-details-marker { display: none; }
+.post-composer-icon { transition: rotate 0.15s; }
+.post-composer[open] .post-composer-icon { rotate: 180deg; }
+.composer-form { margin-block-start: 1rem; }
 
-.post-composer > summary::-webkit-details-marker {
-    display: none;
-}
+/* Posts. */
+.post-title { overflow-wrap: anywhere; }
+.post-content { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.load-more { text-align: center; }
 
-.post-composer[open] .post-composer-icon {
-    transform: rotate(180deg);
-}
+/* Likes. */
+.post-likes { display: flex; align-items: center; gap: 0.5rem; }
+.post-likes .liked { color: var(--destructive); }
+.post-likes .liked svg { fill: currentColor; }
+.like-error { font-size: 0.875rem; color: var(--destructive); }
+
+/* Login. */
+.centered { display: grid; place-items: center; min-block-size: calc(100dvh - 12rem); }
+.login-card { inline-size: 100%; max-inline-size: 28rem; }
+.full-width { inline-size: 100%; }

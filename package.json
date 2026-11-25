@@ -1,0 +1,5 @@
+{
+  "name": "musings",
+  "private": true,
+  "web-types": "./shadleaf.web-types.json"
+}

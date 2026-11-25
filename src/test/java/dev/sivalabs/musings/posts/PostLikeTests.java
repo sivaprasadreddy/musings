@@ -45,7 +45,7 @@ class PostLikeTests extends BaseIT {
                             "id=\"post-likes-24\"",
                             ">1</span>",
                             "aria-label=\"Unlike\"",
-                            "♥",
+                            "aria-pressed=\"true\"",
                             "hx-post=\"/posts/24/unlike\"",
                             "hx-target=\"closest .post-likes\"",
                             "hx-swap=\"outerHTML\"",
@@ -62,7 +62,7 @@ class PostLikeTests extends BaseIT {
                     .exchange();
             assertThat(result).hasStatusOk();
             assertThat(result.getResponse().getContentAsString())
-                    .contains("aria-label=\"Like\"", "♡")
+                    .contains("aria-label=\"Like\"", "aria-pressed=\"false\"")
                     .doesNotContain("like-count");
         }
     }
@@ -88,7 +88,7 @@ class PostLikeTests extends BaseIT {
         var home = mvc.get().uri("/").exchange();
         assertThat(home.getResponse().getContentAsString())
                 .doesNotContain("like-count")
-                .doesNotContain("hx-post=", "aria-label=\"Like\"", "♡", "aria-label=\"Unlike\"", "♥");
+                .doesNotContain("hx-post=", "aria-label=\"Like\"", "aria-pressed=", "aria-label=\"Unlike\"");
         var more = mvc.get().uri("/posts?page=2").exchange();
         assertThat(more.getResponse().getContentAsString())
                 .contains("class=\"like-count\">1</span>")

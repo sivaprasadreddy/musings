@@ -73,7 +73,7 @@ class UserLoginTests extends BaseIT {
                 .session((MockHttpSession) result.getRequest().getSession())
                 .exchange();
         assertThat(home).hasStatusOk();
-        assertThat(home.getResponse().getContentAsString()).contains("Login Tester", "Post a message", "Logout");
+        assertThat(home.getResponse().getContentAsString()).contains("Login Tester", "Post a message", "Sign out");
     }
 
     @Test

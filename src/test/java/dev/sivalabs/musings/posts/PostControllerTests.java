@@ -33,7 +33,7 @@ class PostControllerTests extends BaseIT {
         var result = mvc.get().uri("/").exchange();
         assertThat(result).hasStatusOk().hasViewName("index");
         assertThat(result.getResponse().getContentAsString())
-                .contains("Latest messages", "Post 24", "Message 24", "Load more", "Login")
+                .contains("Latest messages", "Post 24", "Message 24", "Load more", "Sign in")
                 .doesNotContain("Post a message", "action=\"/posts\"", "name=\"title\"", "name=\"content\"");
     }
 

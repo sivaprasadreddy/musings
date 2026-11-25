@@ -19,6 +19,7 @@ class WebSecurityConfig {
         "/js/**",
         "/images/**",
         "/webjars/**",
+        "/shadleaf/**",
         "/favicon.ico",
         "/actuator/health/**",
         "/actuator/info/**",
