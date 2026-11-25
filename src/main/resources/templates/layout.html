@@ -14,42 +14,44 @@
 <body>
 <sl:skip-link/>
 <sl:sidebar-provider>
-    <sl:sidebar collapsible="none">
-        <sl:sidebar-header>
-            <sl:sidebar-menu>
-                <sl:sidebar-menu-item>
-                    <sl:sidebar-menu-button th:href="@{/}" size="lg">
-                        <sl:slot name="icon-start"><span class="app-logo"><sl:icon name="message-square-text"/></span></sl:slot>
-                        <strong th:text="#{app.name}">Musings</strong>
-                    </sl:sidebar-menu-button>
-                </sl:sidebar-menu-item>
-            </sl:sidebar-menu>
-        </sl:sidebar-header>
-        <sl:sidebar-content>
-            <sl:sidebar-group id="nav-main">
-                <sl:sidebar-group-content>
-                    <sl:sidebar-menu>
-                        <sl:sidebar-menu-item>
-                            <sl:sidebar-menu-button th:href="@{/}" th:active="${#slNav.current('/')}">
-                                <sl:slot name="icon-start"><sl:icon name="house"/></sl:slot>
-                                Feed
-                            </sl:sidebar-menu-button>
-                        </sl:sidebar-menu-item>
-                    </sl:sidebar-menu>
-                </sl:sidebar-group-content>
-            </sl:sidebar-group>
-        </sl:sidebar-content>
-    </sl:sidebar>
+    <sl:site-header>
+        <sl:sidebar-trigger aria-label="Menu"><sl:icon name="menu"/></sl:sidebar-trigger>
+        <sl:button as="a" th:href="@{/}" variant="ghost">
+            <sl:slot name="icon-start"><sl:icon name="message-square-text"/></sl:slot>
+            <span th:text="#{app.name}">Musings</span>
+        </sl:button>
+        <sl:sidebar placement="header" variant="inset">
+            <sl:sidebar-header panel-only>
+                <sl:sidebar-menu>
+                    <sl:sidebar-menu-item>
+                        <sl:sidebar-menu-button th:href="@{/}" size="lg">
+                            <sl:slot name="icon-start"><span class="app-logo"><sl:icon name="message-square-text"/></span></sl:slot>
+                            <strong th:text="#{app.name}">Musings</strong>
+                        </sl:sidebar-menu-button>
+                    </sl:sidebar-menu-item>
+                </sl:sidebar-menu>
+            </sl:sidebar-header>
+            <sl:sidebar-content>
+                <sl:sidebar-group id="nav-main">
+                    <sl:sidebar-group-content>
+                        <sl:sidebar-menu>
+                            <sl:sidebar-menu-item>
+                                <sl:sidebar-menu-button th:href="@{/}" th:active="${#slNav.current('/')}">
+                                    <sl:slot name="icon-start"><sl:icon name="house"/></sl:slot>
+                                    Feed
+                                </sl:sidebar-menu-button>
+                            </sl:sidebar-menu-item>
+                        </sl:sidebar-menu>
+                    </sl:sidebar-group-content>
+                </sl:sidebar-group>
+            </sl:sidebar-content>
+        </sl:sidebar>
+        <sl:slot name="end">
+            <sl:theme-toggle/>
+            <sl:user-menu placement="header"/>
+        </sl:slot>
+    </sl:site-header>
     <sl:sidebar-inset>
-        <sl:site-header>
-            <sl:sidebar-trigger aria-label="Menu"><sl:icon name="menu"/></sl:sidebar-trigger>
-            <sl:separator orientation="vertical"/>
-            <sl:slot name="end">
-                <sl:theme-toggle/>
-                <sl:separator orientation="vertical"/>
-                <sl:user-menu placement="header"/>
-            </sl:slot>
-        </sl:site-header>
         <main class="page">
             <sl:alert th:if="${successMessage}" role="status" class="flash">
                 <sl:icon name="circle-check"/>

@@ -1,4 +1,4 @@
-/* Logo square in the sidebar header. */
+/* Logo square in the phone navigation panel header. */
 .app-logo {
     display: grid;
     place-items: center;
@@ -10,21 +10,6 @@
     color: var(--sidebar-primary-foreground);
 }
 .app-logo > svg { inline-size: 1rem; block-size: 1rem; }
-
-/* Top bar: as high as the sidebar header, sticky, with a border below. */
-.sidebar-inset > .site-header {
-    --site-header-height: 4rem;
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 10;
-    gap: 1rem;
-    border-block-end: 1px solid var(--border);
-    background: var(--background);
-}
-.sidebar-inset > .site-header > .site-header-end > .separator { block-size: 1.5rem; }
-@media (width >= 48rem) {
-    .sidebar-inset > .site-header > .separator { display: none; }
-}
 
 /* Page padding. */
 .page { padding: 2rem 1rem; }
